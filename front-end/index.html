@@ -6,7 +6,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Node chat</title>
-
+	<script src="/socket.io/socket.io.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
 	<link rel="stylesheet" href="style.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.2/socket.io.min.js"
@@ -62,7 +62,7 @@
 			<div class="chat-area">
 				<div class="title"><b>Conversation title</b><i class="fa fa-search"></i></div>
 				<div class="chat-list">
-					<ul>
+					<ul id="conversation">
 						<li class="me">
 							<div class="name">
 								<span class="">John Doe</span>
@@ -85,7 +85,7 @@
 				</div>
 				<div class="input-area">
 					<div class="input-wrapper">
-						<input type="text" value="" placeholder="Message here">
+						<input type="text" id="messageinput" value="" placeholder="Message here">
 						<i class="fa fa-smile-o"></i>
 					</div>
 					<input type="button" value="Submit" class="send-btn">
@@ -115,6 +115,34 @@
 			</div>
 		</div>
 	</div>
-</body>
 
+
+	<script>  
+
+		var myHeaders = new Headers();
+		var test;
+		myHeaders.append("Content-Type", "application/json");
+
+		var requestOptions = {
+		method: 'GET',
+		headers: myHeaders,
+		redirect: 'follow'
+		};
+
+		const messages = fetch("http://localhost:3000/messages", requestOptions)
+		.then(response => response.text())
+		.then((result) => {
+			return result
+		})
+		.catch(error => console.log('error', error));
+
+		const printAddress = () => {
+			messages.then((a) => {
+    		console.log(a);
+  });
+};
+		console.log(printAddress)
+	// var socket = io();   
+	</script>
+</body>
 </html>
